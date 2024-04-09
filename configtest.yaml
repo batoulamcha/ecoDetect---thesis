@@ -1,7 +1,0 @@
-
-path: /Users/dev_lap04/Desktop/trash_dataset
-train: images
-val: images
-
-names:
-  0: Watch
