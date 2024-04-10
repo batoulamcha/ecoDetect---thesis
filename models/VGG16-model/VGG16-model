@@ -14,8 +14,8 @@ from tensorflow.keras.optimizers import Adam
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # Paths
-dataset_path = '/Users/dev_lap04/Desktop/ecoDetect-thesis/garbage_classification'
-model_save_path = '/Users/dev_lap04/Downloads/ecoDetect-thesis/models/VGG16-model/VGG16-model.keras'
+dataset_path = '/Users/dev_lap04/Desktop/garbage_classification'
+model_save_path = '/Users/dev_lap04/Desktop/ecoDetect-thesis/models/VGG16-model/VGG16-model.keras'
 
 # Parameters - Using 224x224 which is compatible with VGG16
 image_size = (224, 224)
@@ -106,7 +106,7 @@ accuracy = np.trace(cm) / np.sum(cm)
 print(f'Accuracy: {accuracy * 100:.2f}%')
 
 # Save the confusion matrix
-np.save('/Users/dev_lap04/Downloads/ecoDetect-thesis/models/VGG16-model/confusion_matrix_VGG16.npy', cm)
+np.save('/Users/dev_lap04/Desktop/ecoDetect-thesis/models/VGG16-model/confusion_matrix_VGG16.npy', cm)
 
 # Class labels
 class_labels = list(validation_generator.class_indices.keys())  # Extracting class labels from the generator

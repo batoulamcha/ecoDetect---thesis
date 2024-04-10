@@ -2,9 +2,9 @@ import numpy as np
 import subprocess
 
 # Load confusion matrices
-cm_custom = np.load('/Users/dev_lap04/Downloads/ecoDetect-thesis/models/custom-model/confusion_matrix_custom.npy')
-cm_mobilenet = np.load('/Users/dev_lap04/Downloads/ecoDetect-thesis/models/MobileNetV2-model/confusion_matrix_MobileNetV2.npy')
-cm_vgg16 = np.load('/Users/dev_lap04/Downloads/ecoDetect-thesis/models/VGG16-model/confusion_matrix_VGG16.npy')
+cm_custom = np.load('/Users/dev_lap04/Desktop/ecoDetect-thesis/models/custom-model/confusion_matrix_custom.npy')
+cm_mobilenet = np.load('/Users/dev_lap04/Desktop/ecoDetect-thesis/models/MobileNetV2-model/confusion_matrix_MobileNetV2.npy')
+cm_vgg16 = np.load('/Users/dev_lap04/Desktop/ecoDetect-thesis/models/VGG16-model/confusion_matrix_VGG16.npy')
 
 def calculate_accuracy(cm):
     return np.trace(cm) / np.sum(cm)

@@ -9,12 +9,12 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.keras.optimizers import Adam
 
-# Suppress TensorFlow informational messages and set SSL context for downloading datasets
+# Suppress TensorFlow informational messages
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # Set the path for the dataset and where the model will be saved
-dataset_path = '/Users/dev_lap04/Desktop/ecoDetect-thesis/garbage_classification'
-model_save_path = '/Users/dev_lap04/Downloads/ecoDetect-thesis/models/custom-model/custom-model.keras'
+dataset_path = '/Users/dev_lap04/Desktop/garbage_classification'
+model_save_path = '/Users/dev_lap04/Desktop/ecoDetect-thesis/models/custom-model/custom-model.keras'
 
 # Image and training parameters
 image_size = (224, 224)
@@ -22,7 +22,7 @@ batch_size = 32
 epochs = 50
 
 # Data preparation with augmentation
-train_datagen = ImageDataGenerator(
+datagen = ImageDataGenerator(
     rescale=1./255,
     rotation_range=20,
     width_shift_range=0.2,
@@ -30,25 +30,23 @@ train_datagen = ImageDataGenerator(
     shear_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True,
-    fill_mode='nearest',
-    validation_split=0.2  # Use 20% of the data for validation
+    fill_mode='nearest'
 )
 
-# Load training and validation data
-train_generator = train_datagen.flow_from_directory(
+# Load data without validation split
+train_generator = datagen.flow_from_directory(
+    dataset_path,
+    target_size=image_size,
+    batch_size=batch_size,
+    class_mode='categorical'
+)
+
+validation_generator = datagen.flow_from_directory(
     dataset_path,
     target_size=image_size,
     batch_size=batch_size,
     class_mode='categorical',
-    subset='training'
-)
-
-validation_generator = train_datagen.flow_from_directory(
-    dataset_path,
-    target_size=image_size,
-    batch_size=batch_size,
-    class_mode='categorical',
-    subset='validation'
+    shuffle=False  # Disable shuffling for validation set
 )
 
 # Custom CNN Model Architecture
@@ -66,9 +64,7 @@ model = Sequential([
 ])
 
 # Compile the model
-model.compile(optimizer=Adam(),
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
+model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Callbacks for training process optimization
 early_stopping = EarlyStopping(monitor='val_loss', patience=10)
@@ -79,7 +75,7 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5)
 history = model.fit(
     train_generator,
     epochs=epochs,
-    validation_data=validation_generator,
+    validation_data=validation_generator,  # Note that this is using the full dataset for validation
     callbacks=[early_stopping, model_checkpoint, reduce_lr]
 )
 
@@ -105,11 +101,10 @@ print(cm)
 
 # Calculate the accuracy
 accuracy = np.trace(cm) / np.sum(cm)
-
 print(f'Accuracy: {accuracy * 100:.2f}%')
 
 # Save the confusion matrix
-np.save('/Users/dev_lap04/Downloads/ecoDetect-thesis/models/custom-model/confusion_matrix_custom.npy', cm)  # Change the file name appropriately for each model
+np.save('/Users/dev_lap04/Desktop/ecoDetect-thesis/models/custom-model/confusion_matrix_custom.npy', cm)  # Change the file name appropriately for each model
 
 # Class labels
 class_labels = list(validation_generator.class_indices.keys())  # Extracting class labels from the generator
