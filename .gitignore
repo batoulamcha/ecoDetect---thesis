@@ -1,3 +1,6 @@
 venv/
 __pycache__/
+/models/MobileNetV2-model/MobileNetV2-model.keras
+/models/custom-model/custom-model.keras
+/models/VGG16-model/VGG16-model.keras
 

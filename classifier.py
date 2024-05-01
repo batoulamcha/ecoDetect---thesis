@@ -16,9 +16,9 @@ model_name = sys.argv[1]  # Get model name from command line argument
 
 # Define the path to the model based on the provided model name
 model_paths = {
-    'MobileNetV2': '/Users/dev_lap04/Desktop/ecoDetect-thesis/models/MobileNetV2-model/MobileNetV2-model.keras',
-    'VGG16': '/Users/dev_lap04/Desktop/ecoDetect-thesis/models/VGG16-model/VGG16-model.keras',
-    'CustomModel': '/Users/dev_lap04/Desktop/ecoDetect-thesis/models/custom-model/custom-model.keras'
+    'MobileNetV2': '/Users/dev_lap04/Desktop/ecoDetect---thesis/models/MobileNetV2-model/MobileNetV2-model.keras',
+    'VGG16': '/Users/dev_lap04/Desktop/ecoDetect---thesis/models/VGG16-model/VGG16-model.keras',
+    'CustomModel': '/Users/dev_lap04/Desktop/ecoDetect---thesis/models/custom-model/custom-model.keras'
 }
 
 model_path = model_paths.get(model_name)
